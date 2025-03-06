@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 public class LoginScreen extends JFrame {
 
     public LoginScreen() {
-        setTitle("V1.0.1");
+        setTitle("Prado bonitão V1.0.1");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
