@@ -1,5 +1,6 @@
 package org.example;
-
+import javax.sql.DataSource;
+import javax.sql.ConnectionPoolDataSource;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -7,44 +8,36 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DataBaseConnection {
-
-    private String driver = "com.mysql.cj.jdbc.Driver";
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/my_application";
     private static final String USER = "root";
-    private static final String PASSWORD = "Gus35582175";
+    private static final String PASSWORD = "root";
 
     public static Connection getConnection() throws SQLException {
+        try {
+            // Carregar explicitamente o driver JDBC
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            // Exibe o erro caso o driver não seja encontrado
+            e.printStackTrace();
+        }
+
+        // Retorna a conexão com o banco de dados
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public static boolean validateLogin(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        boolean isValid = false;
+    public static boolean validateLogin(String name, String password){
+        String query = "SELECT * FROM users WHERE username = ? AND password = ?";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
 
-        try (Connection conn = getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                isValid = true;
-
-                // Printando os valores retornados
-                System.out.println("Usuário encontrado no BD:");
-                System.out.println("ID: " + rs.getInt("id"));
-                System.out.println("Username: " + rs.getString("username"));
-                System.out.println("Email: " + rs.getString("email"));
-            } else {
-                System.out.println("Nenhum usuário encontrado com essas credenciais.");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
             }
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        return isValid;
     }
+
 }

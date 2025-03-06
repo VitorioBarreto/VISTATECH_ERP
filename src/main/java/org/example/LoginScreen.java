@@ -122,27 +122,14 @@ public class LoginScreen extends JFrame {
                 String username = userField.getText();
                 String password = new String(passwordField.getPassword());
 
-                if (!username.isEmpty() && !password.isEmpty()) {
-                    new MainScreen();
-                    dispose();
+                if (username.isEmpty() && password.isEmpty()) {
+                    JOptionPane.showMessageDialog(LoginScreen.this, "Por favor, preencha todos os campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    JOptionPane.showMessageDialog(LoginScreen.this, "Usuário ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-                    System.out.println("Username inserido: " + username);
-                    System.out.println("Password inserida: " + password);
-
-                    System.out.println("Validador BD: " + DataBaseConnection.validateLogin(username, password));
-
-                    // Validação no banco
-                    if (!username.isEmpty() && !password.isEmpty()) {
-                        if (DataBaseConnection.validateLogin(username, password)) {
-                            JOptionPane.showMessageDialog(LoginScreen.this, "Login bem-sucedido!");
-                            new MainScreen();
-                            dispose();
-                        } else {
-                            JOptionPane.showMessageDialog(LoginScreen.this, "Usuário ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
-                        }
+                    if (DataBaseConnection.validateLogin(username, password)) {
+                        new MainScreen();
+                        dispose();
                     } else {
-                        JOptionPane.showMessageDialog(LoginScreen.this, "Por favor, preencha todos os campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
+                        JOptionPane.showMessageDialog(LoginScreen.this, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
                     }
                 }
             }});
@@ -163,24 +150,12 @@ public class LoginScreen extends JFrame {
         add(panel);
         setVisible(true);
     }
-    // Metodo para validar login no banco de dados
-    private boolean validateLogin(String username, String password) {
-        String query = "SELECT * FROM users WHERE username = ? AND password = SHA2(?, 256)";
-        try (Connection conn = DataBaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setString(1, username);
-            stmt.setString(2, password);
-
-            ResultSet resultSet = stmt.executeQuery();
-            return resultSet.next();
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao conectar ao banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-    }
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(LoginScreen::new);
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                LoginScreen loginScreen = new LoginScreen();
+                loginScreen.setVisible(true);
+            }
+        });
     }
 }
