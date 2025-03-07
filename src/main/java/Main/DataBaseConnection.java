@@ -1,6 +1,4 @@
-package org.example;
-import javax.sql.DataSource;
-import javax.sql.ConnectionPoolDataSource;
+package Main;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -39,5 +37,18 @@ public class DataBaseConnection {
             throw new RuntimeException(e);
         }
     }
+    public static boolean validAdmin(String name, String password){
+        String query = "SELECT * FROM users WHERE username = ? AND password = ? AND admin = 1";
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, password);
 
-}
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+}}

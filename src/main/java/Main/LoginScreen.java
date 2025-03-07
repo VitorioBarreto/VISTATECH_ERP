@@ -1,6 +1,6 @@
-package org.example;
+package Main;
 
-import org.example.DataBaseConnection;
+import MainScreen.MainScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,10 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 
 public class LoginScreen extends JFrame {
 
@@ -126,7 +122,8 @@ public class LoginScreen extends JFrame {
                     JOptionPane.showMessageDialog(LoginScreen.this, "Por favor, preencha todos os campos.", "Aviso", JOptionPane.WARNING_MESSAGE);
                 } else {
                     if (DataBaseConnection.validateLogin(username, password)) {
-                        new MainScreen();
+                        boolean isAdmin = DataBaseConnection.validAdmin(username, password);
+                        new MainScreen(isAdmin);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(LoginScreen.this, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);

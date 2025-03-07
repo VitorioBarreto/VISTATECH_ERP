@@ -1,4 +1,4 @@
-package org.example;
+package MainScreen;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +12,7 @@ public class MainScreen extends JFrame {
     // Tamanho fixo padrão do sistema
     private static final Dimension FIXED_DIMENSION = new Dimension(900, 600);
 
-    public MainScreen() {
+    public MainScreen(boolean isAdmin) {
         setTitle("Sistema ERP - Tela Inicial");
         setIconImage(new ImageIcon("src/main/resources/logotipo.png").getImage());
 
@@ -119,9 +119,5 @@ public class MainScreen extends JFrame {
     // Verifica se a janela está minimizada
     private boolean isMinimized() {
         return (getExtendedState() & JFrame.ICONIFIED) == JFrame.ICONIFIED;
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(MainScreen::new);
     }
 }
