@@ -6,11 +6,12 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
+import CadUsuario.UserView;
 
 public class MainScreenView extends JFrame {
 
     // Tamanho fixo padrão do sistema
-    private static final Dimension FIXED_DIMENSION = new Dimension(900, 600);
+    private static final Dimension FIXED_DIMENSION = new Dimension(1600, 800);
 
     public MainScreenView(boolean isAdmin) {
         setTitle("Sistema ERP - Tela Inicial");
@@ -49,35 +50,25 @@ public class MainScreenView extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel hotbar = new JPanel();
-        hotbar.setLayout(new FlowLayout(FlowLayout.LEFT));
-        hotbar.setBackground(new Color(59, 89, 182));
-        hotbar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        hotbar.setLayout(new GridLayout(1, 0, 10, 0)); // Distribui os botões igualmente no espaço
+        hotbar.setBackground(new Color(59, 89, 182)); // Cor de fundo do cabeçalho
+        hotbar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margens internas
 
         // Botões do menu principal
         String[] modules = {"Cadastro", "Pré Venda", "Estoque Produtos", "Financeiro", "Notas Eletrônicas", "Relatórios"};
         for (String module : modules) {
-            JButton button = new JButton(module);
-            button.setFont(new Font("Arial", Font.BOLD, 14));
-            button.setBackground(Color.WHITE);
-            button.setForeground(new Color(59, 89, 182));
-            button.setFocusPainted(false);
-            button.setBorder(BorderFactory.createCompoundBorder(
-                    BorderFactory.createLineBorder(Color.DARK_GRAY, 1),
-                    BorderFactory.createEmptyBorder(10, 20, 10, 20)
-            ));
+            JButton button = createHoverButton(module);
 
-            // Efeito de hover para os botões
-            button.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseEntered(java.awt.event.MouseEvent e) {
-                    button.setBackground(new Color(230, 230, 230)); // Cor ao passar o mouse
-                }
-
-                @Override
-                public void mouseExited(java.awt.event.MouseEvent e) {
-                    button.setBackground(Color.WHITE); // Volta ao branco
-                }
-            });
+            // Adiciona funcionalidade ao botão "Cadastro"
+            if (module.equals("Cadastro")) {
+                button.addActionListener(e -> {
+                    // Abrir tela UserView em uma nova janela
+                    UserView userView = new UserView();
+                    userView.setVisible(true);
+                    userView.setSize(800, 600); // Define o tamanho da janela
+                    userView.setLocationRelativeTo(null); // Centraliza na tela
+                });
+            }
 
             hotbar.add(button);
         }
@@ -105,10 +96,42 @@ public class MainScreenView extends JFrame {
         logoPanel.add(logoLabel);
         logoPanel.add(textLabel);
         mainPanel.add(logoPanel);
+
         add(hotbar, BorderLayout.NORTH);
         add(mainPanel, BorderLayout.CENTER);
 
         setVisible(true);
+    }
+
+    /**
+     * Cria um botão com efeito hover para mudar sua cor.
+     */
+    private JButton createHoverButton(String text) {
+        JButton button = new JButton(text);
+        button.setFont(new Font("Arial", Font.BOLD, 16));
+        button.setBackground(Color.WHITE); // Cor de fundo padrão
+        button.setForeground(new Color(59, 89, 182)); // Cor do texto
+        button.setFocusPainted(false);
+        button.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(new Color(59, 89, 182), 2), // Borda fixa azul
+                BorderFactory.createEmptyBorder(10, 20, 10, 20) // Margens internas
+        ));
+        button.setOpaque(true);
+
+        // Adiciona efeito de hover (somente altera a cor de fundo)
+        button.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseEntered(java.awt.event.MouseEvent e) {
+                button.setBackground(new Color(230, 230, 250)); // Cor ao passar o mouse
+            }
+
+            @Override
+            public void mouseExited(java.awt.event.MouseEvent e) {
+                button.setBackground(Color.WHITE); // Volta ao branco
+            }
+        });
+
+        return button;
     }
 
     // Verifica se a janela está maximizada

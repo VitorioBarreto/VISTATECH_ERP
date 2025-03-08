@@ -13,7 +13,7 @@ import java.awt.event.MouseEvent;
 public class LoginScreen extends JFrame {
 
     public LoginScreen() {
-        setTitle("Prado bonitão V1.0.1");
+        setTitle("V1.0.1");
         setSize(400, 350);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
