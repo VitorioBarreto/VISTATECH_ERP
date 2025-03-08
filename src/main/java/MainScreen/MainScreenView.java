@@ -7,12 +7,12 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 
-public class MainScreen extends JFrame {
+public class MainScreenView extends JFrame {
 
     // Tamanho fixo padrão do sistema
     private static final Dimension FIXED_DIMENSION = new Dimension(900, 600);
 
-    public MainScreen(boolean isAdmin) {
+    public MainScreenView(boolean isAdmin) {
         setTitle("Sistema ERP - Tela Inicial");
         setIconImage(new ImageIcon("src/main/resources/logotipo.png").getImage());
 

@@ -1,6 +1,7 @@
-package Main;
+package LoginScreen;
 
-import MainScreen.MainScreen;
+import Functions.DataBaseConnection;
+import MainScreen.MainScreenView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,7 +124,7 @@ public class LoginScreen extends JFrame {
                 } else {
                     if (DataBaseConnection.validateLogin(username, password)) {
                         boolean isAdmin = DataBaseConnection.validAdmin(username, password);
-                        new MainScreen(isAdmin);
+                        new MainScreenView(isAdmin);
                         dispose();
                     } else {
                         JOptionPane.showMessageDialog(LoginScreen.this, "Usuário ou senha incorretos.", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -133,7 +134,6 @@ public class LoginScreen extends JFrame {
 
         centerPanel.add(loginButton, constraints);
 
-        // Rodapé
         JLabel footerLabel = new JLabel("Em Desenvolvimento © 2025");
         footerLabel.setFont(new Font("Arial", Font.PLAIN, 12));
         footerLabel.setForeground(Color.GRAY);
