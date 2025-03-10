@@ -64,7 +64,7 @@ public class MainScreenView extends JFrame {
                     // Abrir tela UserView em uma nova janela
                     UserView userView = new UserView();
                     userView.setVisible(true);
-                    userView.setSize(800, 600); // Define o tamanho da janela
+                    userView.setSize(800, 500); // Define o tamanho da janela
                     userView.setLocationRelativeTo(null); // Centraliza na tela
                 });
             }
