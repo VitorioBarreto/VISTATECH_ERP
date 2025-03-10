@@ -140,7 +140,6 @@ public class LoginScreen extends JFrame {
         footerLabel.setHorizontalAlignment(SwingConstants.CENTER);
         footerLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 0, 0));
 
-        // Adiciona painéis ao JFrame
         panel.add(centerPanel, BorderLayout.CENTER);
         panel.add(footerLabel, BorderLayout.SOUTH);
 

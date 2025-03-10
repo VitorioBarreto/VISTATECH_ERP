@@ -10,7 +10,6 @@ import CadUsuario.UserView;
 
 public class MainScreenView extends JFrame {
 
-    // Tamanho fixo padrão do sistema
     private static final Dimension FIXED_DIMENSION = new Dimension(1600, 800);
 
     public MainScreenView(boolean isAdmin) {
