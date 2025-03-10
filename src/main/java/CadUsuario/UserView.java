@@ -5,18 +5,13 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import javax.swing.border.*;
-import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import java.awt.*;
 import java.awt.event.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.*;
-import javax.swing.table.*;
-import java.awt.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableRowSorter;
 
 public class UserView extends JFrame {
 
@@ -25,64 +20,55 @@ public class UserView extends JFrame {
     public JLabel lblLogo;
     public JTextField txtNome, txtEmail;
     public JPasswordField pswSenha, pswSenhaconfirm;
+    public JCheckBox cbValidadmin, cbValidvendedor;
 
     public UserView() {
-        //Definindo configurações da Janela
+        // Definindo configurações da Janela
         super("Cadastro de usuário");
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(800, 500);
         setLocationRelativeTo(null);
         setResizable(false);
         Components();
         carregarUsuarios();
-
     }
+
     private void Components() {
-        //Criando um Jpanel para ser o cabecalho
         JPanel painelCabecalho = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelCabecalho.setBackground(new Color(59, 89, 182));
         painelCabecalho.setPreferredSize(new Dimension(800, 70));
         add(painelCabecalho, BorderLayout.NORTH); // Adiciona o painel ao topo do JFrame
 
-        //logo criação
         lblLogo = new JLabel(redimensionarImagem("src/main/resources/logotipo.png", 65, 65));
         JLabel lblTitulo = new JLabel("VistaTech ERP");
 
-        //titulo
         lblTitulo.setForeground(Color.WHITE);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 18));
-
-        //adicionando coisas ao cabecalho
         painelCabecalho.add(lblLogo);
         painelCabecalho.add(lblTitulo);
 
-        //painel cinza que fica a esquerda
         JPanel painelItens = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelItens.setBackground(new Color(230, 230, 230));
         painelItens.setPreferredSize(new Dimension(330, 5));
         add(painelItens, BorderLayout.WEST);
 
-        //div aonde preenche os dados
         JPanel painelFormulario = new JPanel(new GridBagLayout());
-        painelItens.add(painelFormulario, BorderLayout.NORTH);
         painelFormulario.setBackground(new Color(230, 230, 230));
         painelFormulario.setPreferredSize(new Dimension(320, 280));
-        painelFormulario.setBorder(
-                new CompoundBorder(
-                        BorderFactory.createTitledBorder(
-                                BorderFactory.createLineBorder(Color.gray, 0, false),
-                                "Dados do usuário",
-                                TitledBorder.DEFAULT_JUSTIFICATION,
-                                TitledBorder.ABOVE_TOP
-                        ),
-                        BorderFactory.createBevelBorder(BevelBorder.LOWERED)
-                )
-        );
+        painelFormulario.setBorder(new CompoundBorder(
+                BorderFactory.createTitledBorder(
+                        BorderFactory.createLineBorder(Color.gray, 0, false),
+                        "Dados do usuário",
+                        TitledBorder.DEFAULT_JUSTIFICATION,
+                        TitledBorder.ABOVE_TOP),
+                BorderFactory.createBevelBorder(BevelBorder.LOWERED)
+        ));
+        painelItens.add(painelFormulario, BorderLayout.NORTH);
+
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        // Ajusta as posições do formulário
         gbc.gridx = 0;
         gbc.gridy = 1;
         painelFormulario.add(new JLabel("Nome:"), gbc);
@@ -115,7 +101,7 @@ public class UserView extends JFrame {
         gbc.gridy = 5;
         painelFormulario.add(new JLabel("Admin:"), gbc);
         gbc.gridx = 1;
-        JCheckBox cbValidadmin = new JCheckBox();
+        cbValidadmin = new JCheckBox();
         cbValidadmin.setBackground(new Color(230, 230, 230));
         painelFormulario.add(cbValidadmin, gbc);
 
@@ -123,7 +109,7 @@ public class UserView extends JFrame {
         gbc.gridy = 6;
         painelFormulario.add(new JLabel("Vendedor:"), gbc);
         gbc.gridx = 1;
-        JCheckBox cbValidvendedor = new JCheckBox();
+        cbValidvendedor = new JCheckBox();
         cbValidvendedor.setBackground(new Color(230, 230, 230));
         painelFormulario.add(cbValidvendedor, gbc);
 
@@ -132,82 +118,162 @@ public class UserView extends JFrame {
         painelBotoes.setPreferredSize(new Dimension(320, 100));
         painelItens.add(painelBotoes, BorderLayout.SOUTH);
 
-        //botão de adicionar
-        gbc.gridx=0;
-        gbc.gridy=0;
         JButton btnAdicionar = new JButton("Adicionar");
         styleButton(btnAdicionar);
         painelBotoes.add(btnAdicionar);
+        btnAdicionar.addActionListener(e -> adicionarUsuario());
 
-        //butão de alterar
-        gbc.gridx=1;
-        gbc.gridy=0;
         JButton btnAlterar = new JButton("Alterar");
         styleButton(btnAlterar);
         painelBotoes.add(btnAlterar);
+        btnAlterar.addActionListener(e -> alterarUsuario());
 
-        //botão de remover
-        gbc.gridx=0;
-        gbc.gridy=1;
         JButton btnRemover = new JButton("Remover");
         styleButton(btnRemover);
         painelBotoes.add(btnRemover);
+        btnRemover.addActionListener(e -> removerUsuario());
 
-        //botão de Limpar
-        gbc.gridx=1;
-        gbc.gridy=1;
         JButton btnLimpar = new JButton("Limpar");
         styleButton(btnLimpar);
         painelBotoes.add(btnLimpar);
+        btnLimpar.addActionListener(e -> limparFormulario());
 
-        //painel de visualização dos usuários
         JPanel painelTabela = new JPanel(new BorderLayout());
-        //add(painelTabela, BorderLayout.EAST);
-
-
-        //tabela
-        modelo = new ModeloTabela();
+        modelo = new ModeloTabela(); // Tabela personalizada
         tabela = new JTable(modelo);
+
         DefaultTableCellRenderer centralizado = new DefaultTableCellRenderer();
-        centralizado.setHorizontalAlignment(SwingConstants.LEFT); // Centraliza o texto
+        centralizado.setHorizontalAlignment(SwingConstants.LEFT);
 
         for (int i = 0; i < tabela.getColumnCount(); i++) {
             tabela.getColumnModel().getColumn(i).setCellRenderer(centralizado);
         }
 
-        //ajustando tamanbho das colunas
-        tabela.getColumnModel().getColumn(0).setPreferredWidth(5); //id
-        tabela.getColumnModel().getColumn(1).setPreferredWidth(20);//nome
-        //tabela.getColumnModel().getColumn(2).setPreferredWidth(30);//email
-        tabela.getColumnModel().getColumn(3).setPreferredWidth(5);//vendedor
-        tabela.getColumnModel().getColumn(4).setPreferredWidth(5);//admin
-
-        tabela.setRowSorter(new TableRowSorter<>(modelo));  // Permite ordenação correta
-        modelo.fireTableDataChanged();
-
-        tabela.setFont(new Font("Arial", Font.PLAIN, 12));
-        tabela.setRowHeight(20);
-
+        tabela.setRowSorter(new TableRowSorter<>(modelo));
         JScrollPane listagemProdutos = new JScrollPane(tabela);
-        listagemProdutos.setBorder(BorderFactory.createTitledBorder("Lista de Produtos"));
-
         listagemProdutos.setBackground(new Color(230, 230, 230));
         listagemProdutos.setPreferredSize(new Dimension(450, 280));
-        listagemProdutos.setBorder(
-                new CompoundBorder(
-                        BorderFactory.createTitledBorder(
-                                BorderFactory.createLineBorder(Color.gray, 0, false),
-                                "Dados do usuário",
-                                TitledBorder.DEFAULT_JUSTIFICATION,
-                                TitledBorder.ABOVE_TOP
-                        ),
-                        BorderFactory.createBevelBorder(BevelBorder.LOWERED)
-                )
-        );
+        listagemProdutos.setBorder(BorderFactory.createTitledBorder("Dados do usuário"));
 
         add(listagemProdutos, BorderLayout.EAST);
     }
 
+    private void adicionarUsuario() {
+        try (Connection conn = DataBaseConnection.getConnection()) {
+            String sql = "INSERT INTO users (username, password, email, admin, vendedor) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                String nome = txtNome.getText();
+                String senha = new String(pswSenha.getPassword());
+                String senhaConfirm = new String(pswSenhaconfirm.getPassword());
+                String email = txtEmail.getText();
+                int admin = cbValidadmin.isSelected() ? 1 : 0;
+                int vendedor = cbValidvendedor.isSelected() ? 1 : 0;
+
+                if (nome.isEmpty() || senha.isEmpty() || email.isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
+                    return;
+                }
+
+                if (!senha.equals(senhaConfirm)) {
+                    JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
+                    return;
+                }
+
+                stmt.setString(1, nome);
+                stmt.setString(2, senha);
+                stmt.setString(3, email);
+                stmt.setInt(4, admin);
+                stmt.setInt(5, vendedor);
+                stmt.executeUpdate();
+
+                JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!");
+                carregarUsuarios();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Erro ao adicionar usuário!");
+        }
+    }
+
+    private void alterarUsuario() {
+        int selectedRow = tabela.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um usuário para alterar!");
+            return;
+        }
+
+        int id = (int) tabela.getValueAt(selectedRow, 0);
+
+        try (Connection conn = DataBaseConnection.getConnection()) {
+            String sql = "UPDATE users SET username = ?, password = ?, email = ?, admin = ?, vendedor = ? WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, txtNome.getText());
+                stmt.setString(2, new String(pswSenha.getPassword()));
+                stmt.setString(3, txtEmail.getText());
+                stmt.setInt(4, cbValidadmin.isSelected() ? 1 : 0);
+                stmt.setInt(5, cbValidvendedor.isSelected() ? 1 : 0);
+                stmt.setInt(6, id);
+
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
+                carregarUsuarios();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar usuário!");
+        }
+    }
+
+    private void removerUsuario() {
+        int selectedRow = tabela.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(null, "Selecione um usuário para remover!");
+            return;
+        }
+
+        int id = (int) tabela.getValueAt(selectedRow, 0);
+
+        try (Connection conn = DataBaseConnection.getConnection()) {
+            String sql = "DELETE FROM users WHERE id = ?";
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, id);
+                stmt.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                carregarUsuarios();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao remover usuário!");
+        }
+    }
+
+    private void limparFormulario() {
+        txtNome.setText("");
+        pswSenha.setText("");
+        pswSenhaconfirm.setText("");
+        txtEmail.setText("");
+        cbValidadmin.setSelected(false);
+        cbValidvendedor.setSelected(false);
+    }
+
+    private void carregarUsuarios() {
+        modelo.setRowCount(0); // Limpa tabela
+        try (Connection conn = DataBaseConnection.getConnection()) {
+            String sql = "SELECT * FROM users";
+            try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Object[] row = {
+                            rs.getInt("id"),
+                            rs.getString("username"),
+                            rs.getString("email"),
+                            rs.getInt("admin") == 1 ? "Sim" : "Não",
+                            rs.getInt("vendedor") == 1 ? "Sim" : "Não"
+                    };
+                    modelo.addRow(row);
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao carregar usuários!");
+        }
+    }
 
     private ImageIcon redimensionarImagem(String caminho, int largura, int altura) {
         ImageIcon icon = new ImageIcon(caminho);
@@ -215,7 +281,6 @@ public class UserView extends JFrame {
         return new ImageIcon(imagem);
     }
 
-    //função responsavel por estilizar os botões
     private void styleButton(JButton button) {
         button.setBackground(new Color(59, 89, 182));
         button.setForeground(Color.WHITE);
@@ -224,7 +289,6 @@ public class UserView extends JFrame {
         button.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
         button.setPreferredSize(new Dimension(150, 40));
 
-        // Efeitos de hover
         button.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
@@ -239,55 +303,24 @@ public class UserView extends JFrame {
             }
         });
     }
+
     class ModeloTabela extends DefaultTableModel {
         public ModeloTabela() {
             super(new String[]{"Id", "Nome", "Email", "Admin", "Vendedor"}, 0);
         }
 
-        @Override
         public Class<?> getColumnClass(int columnIndex) {
             switch (columnIndex) {
-                case 0: return Integer.class;  // ID
-                case 1: return String.class;   // Nome
-                case 2: return String.class;   // Email
-                case 3: return String.class;   // Admin
-                case 4: return String.class;  // Vendedor
-                default: return Object.class;
+                case 0:
+                    return Integer.class;
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    return String.class;
+                default:
+                    return Object.class;
             }
-        }
-    }
-
-    private void carregarUsuarios() {
-        try (Connection conn = DataBaseConnection.getConnection()) {
-            String sql = "SELECT * FROM users";
-            try (PreparedStatement stmt = conn.prepareStatement(sql); ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String nome = rs.getString("username");
-                    String email = rs.getString("email");
-                    int admin = rs.getInt("admin");
-                    int vendedor = rs.getInt("vendedor");
-
-                    String vlrAdmin,vlrVendedor;
-
-                    if (admin == 1) {
-                        vlrAdmin = "Sim";
-                    }else{
-                        vlrAdmin = "Não";
-                    }
-                    if(vendedor == 1){
-                        vlrVendedor = "Sim";
-                    }else{
-                        vlrVendedor = "Não";
-                    }
-
-
-                    modelo.addRow(new Object[]{id, nome, email, vlrAdmin, vlrVendedor});
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Erro ao carregar usuários", "Erro", JOptionPane.ERROR_MESSAGE);
         }
     }
 
