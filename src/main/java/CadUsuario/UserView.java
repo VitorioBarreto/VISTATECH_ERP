@@ -231,17 +231,25 @@ public class UserView extends JFrame {
         }
 
         int id = (int) tabela.getValueAt(selectedRow, 0);
+        int respostaRemovcao = JOptionPane.showConfirmDialog(
+                null,
+                "Deseja realmente remover esse usuário??",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION
+        );
 
-        try (Connection conn = DataBaseConnection.getConnection()) {
-            String sql = "DELETE FROM users WHERE id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setInt(1, id);
-                stmt.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
-                carregarUsuarios();
+        if (respostaRemovcao == JOptionPane.YES_OPTION) {
+            try (Connection conn = DataBaseConnection.getConnection()) {
+                String sql = "DELETE FROM users WHERE id = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    stmt.setInt(1, id);
+                    stmt.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Usuário removido com sucesso!");
+                    carregarUsuarios();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao remover usuário!");
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao remover usuário!");
         }
     }
 
