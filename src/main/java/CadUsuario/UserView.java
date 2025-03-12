@@ -31,6 +31,7 @@ public class UserView extends JFrame {
         setResizable(false);
         Components();
         carregarUsuarios();
+        setIconImage(new ImageIcon(getClass().getClassLoader().getResource("logotipo.png")).getImage());
     }
 
     private void Components() {
@@ -39,7 +40,7 @@ public class UserView extends JFrame {
         painelCabecalho.setPreferredSize(new Dimension(800, 70));
         add(painelCabecalho, BorderLayout.NORTH); // Adiciona o painel ao topo do JFrame
 
-        lblLogo = new JLabel(redimensionarImagem("src/main/resources/logotipo.png", 65, 65));
+        lblLogo = new JLabel(redimensionarImagem("src/main/resources/whitelogo.png", 60, 60));
         JLabel lblTitulo = new JLabel("VistaTech ERP");
 
         lblTitulo.setForeground(Color.WHITE);
@@ -178,6 +179,10 @@ public class UserView extends JFrame {
                     JOptionPane.showMessageDialog(null, "As senhas não coincidem!");
                     return;
                 }
+                if(!email.contains("@")){
+                    JOptionPane.showMessageDialog(null, "Insira um email valido!");
+                    return;
+                }
 
                 stmt.setString(1, nome);
                 stmt.setString(2, senha);
@@ -188,6 +193,7 @@ public class UserView extends JFrame {
 
                 JOptionPane.showMessageDialog(null, "Usuário adicionado com sucesso!");
                 carregarUsuarios();
+                limparFormulario();
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -202,25 +208,42 @@ public class UserView extends JFrame {
             return;
         }
 
+
         int id = (int) tabela.getValueAt(selectedRow, 0);
 
-        try (Connection conn = DataBaseConnection.getConnection()) {
-            String sql = "UPDATE users SET username = ?, password = ?, email = ?, admin = ?, vendedor = ? WHERE id = ?";
-            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-                stmt.setString(1, txtNome.getText());
-                stmt.setString(2, new String(pswSenha.getPassword()));
-                stmt.setString(3, txtEmail.getText());
-                stmt.setInt(4, cbValidadmin.isSelected() ? 1 : 0);
-                stmt.setInt(5, cbValidvendedor.isSelected() ? 1 : 0);
-                stmt.setInt(6, id);
+        int respostaRemovcao = JOptionPane.showConfirmDialog(
+                null,
+                "Deseja realmente alterar o usuário de id " + id + "??",
+                "Confirmação",
+                JOptionPane.YES_NO_OPTION
+        );
 
-                stmt.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
-                carregarUsuarios();
+        if (respostaRemovcao == JOptionPane.YES_OPTION) {
+            try (Connection conn = DataBaseConnection.getConnection()) {
+                String sql = "UPDATE users SET username = ?, password = ?, email = ?, admin = ?, vendedor = ? WHERE id = ?";
+                try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                    if (txtNome.getText().isEmpty() || new String(pswSenha.getPassword()).isEmpty() || txtEmail.getText().isEmpty()) {
+                        JOptionPane.showMessageDialog(null, "Preencha todos os campos obrigatórios!");
+                        return;
+                    }
+
+                    stmt.setString(1, txtNome.getText());
+                    stmt.setString(2, new String(pswSenha.getPassword()));
+                    stmt.setString(3, txtEmail.getText());
+                    stmt.setInt(4, cbValidadmin.isSelected() ? 1 : 0);
+                    stmt.setInt(5, cbValidvendedor.isSelected() ? 1 : 0);
+                    stmt.setInt(6, id);
+
+                    stmt.executeUpdate();
+                    JOptionPane.showMessageDialog(null, "Usuário alterado com sucesso!");
+                    carregarUsuarios();
+                    limparFormulario();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Erro ao alterar usuário!");
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao alterar usuário!");
         }
+
     }
 
     private void removerUsuario() {
@@ -233,7 +256,7 @@ public class UserView extends JFrame {
         int id = (int) tabela.getValueAt(selectedRow, 0);
         int respostaRemovcao = JOptionPane.showConfirmDialog(
                 null,
-                "Deseja realmente remover esse usuário??",
+                "Deseja realmente remover o usário de id " + id + "??",
                 "Confirmação",
                 JOptionPane.YES_NO_OPTION
         );

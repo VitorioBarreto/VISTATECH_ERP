@@ -22,6 +22,7 @@ public class MainScreenView extends JFrame {
 
         setResizable(true);
 
+
         // Listener para monitorar mudanças no estado da janela
         addWindowStateListener(new WindowStateListener() {
             @Override
@@ -53,20 +54,34 @@ public class MainScreenView extends JFrame {
         hotbar.setBackground(new Color(59, 89, 182)); // Cor de fundo do cabeçalho
         hotbar.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Margens internas
 
-        // Botões do menu principal
+        //Menu suspenso de cadastro --------------------------
+        JPopupMenu popMenuCadastro = new JPopupMenu();
+        popMenuCadastro.setBackground(new Color(59, 89, 182));
+        popMenuCadastro.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+        popMenuCadastro.setPreferredSize(new Dimension(310, 200));
+
+        JMenuItem menuUsuario = new JMenuItem("Usuário");
+        popMenuCadastro.add(menuUsuario);
+        JMenuItem menuCliente = new JMenuItem("Cliente");
+        popMenuCadastro.add(menuCliente);
+        JMenuItem menuProduto = new JMenuItem("Produto");
+        popMenuCadastro.add(menuProduto);
+
+        JMenuItem[] menuItens = {menuUsuario, menuCliente, menuProduto};
+
+        for (JMenuItem item : menuItens) {
+           estilizarMenuitens(item);
+        }
+
+        // Botões do menu principal e funcionalidades
         String[] modules = {"Cadastro", "Pré Venda", "Estoque Produtos", "Financeiro", "Notas Eletrônicas", "Relatórios"};
         for (String module : modules) {
             JButton button = createHoverButton(module);
 
             // Adiciona funcionalidade ao botão "Cadastro"
             if (module.equals("Cadastro")) {
-                button.addActionListener(e -> {
-                    // Abrir tela UserView em uma nova janela
-                    UserView userView = new UserView();
-                    userView.setVisible(true);
-                    userView.setSize(800, 500); // Define o tamanho da janela
-                    userView.setLocationRelativeTo(null); // Centraliza na tela
-                });
+                button.addActionListener(e -> popMenuCadastro.show(button, 0, button.getHeight()));
+                menuUsuario.addActionListener(e -> {UserView userView = new UserView(); userView.setVisible(true);});
             }
 
             hotbar.add(button);
@@ -131,6 +146,18 @@ public class MainScreenView extends JFrame {
         });
 
         return button;
+    }
+    public static void estilizarMenuitens(JMenuItem item) {
+        item.setBackground(new Color(255, 255, 255));
+        item.setForeground(new Color(0, 0, 0));
+        item.setFont(new Font("Arial", Font.BOLD, 13));
+        item.setHorizontalTextPosition(SwingConstants.CENTER);
+        item.setHorizontalAlignment(SwingConstants.CENTER);
+    }
+
+    public static void main(String[] args) {
+        MainScreenView mainScreen = new MainScreenView(true);
+        mainScreen.setVisible(true);
     }
 
     // Verifica se a janela está maximizada
