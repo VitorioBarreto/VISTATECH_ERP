@@ -213,7 +213,7 @@ public class UserView extends JFrame {
 
         int respostaRemovcao = JOptionPane.showConfirmDialog(
                 null,
-                "Deseja realmente alterar o usuário de id " + id + "??",
+                "Deseja realmente alterar o usuário de ID: " + id + "??",
                 "Confirmação",
                 JOptionPane.YES_NO_OPTION
         );
@@ -256,7 +256,7 @@ public class UserView extends JFrame {
         int id = (int) tabela.getValueAt(selectedRow, 0);
         int respostaRemovcao = JOptionPane.showConfirmDialog(
                 null,
-                "Deseja realmente remover o usário de id " + id + "??",
+                "Deseja realmente remover o usário de ID: " + id + "??",
                 "Confirmação",
                 JOptionPane.YES_NO_OPTION
         );

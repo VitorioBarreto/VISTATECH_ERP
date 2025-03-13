@@ -7,12 +7,13 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 import CadUsuario.UserView;
+import CadCliente.ClientView;
 
 public class MainScreenView extends JFrame {
 
     private static final Dimension FIXED_DIMENSION = new Dimension(1600, 800);
 
-    public MainScreenView(boolean isAdmin) {
+    public MainScreenView(boolean adminValidation) {
         setTitle("Sistema ERP - Tela Inicial");
         setIconImage(new ImageIcon("src/main/resources/logotipo.png").getImage());
 
@@ -58,7 +59,7 @@ public class MainScreenView extends JFrame {
         JPopupMenu popMenuCadastro = new JPopupMenu();
         popMenuCadastro.setBackground(new Color(59, 89, 182));
         popMenuCadastro.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-        popMenuCadastro.setPreferredSize(new Dimension(310, 200));
+        popMenuCadastro.setPreferredSize(new Dimension(250, 200));
 
         JMenuItem menuUsuario = new JMenuItem("Usuário");
         popMenuCadastro.add(menuUsuario);
@@ -74,14 +75,21 @@ public class MainScreenView extends JFrame {
         }
 
         // Botões do menu principal e funcionalidades
-        String[] modules = {"Cadastro", "Pré Venda", "Estoque Produtos", "Financeiro", "Notas Eletrônicas", "Relatórios"};
+        String[] modules = {"Cadastro", "Pré Venda", "Estoque Produtos", "Financeiro", "Notas Eletrônicas", "Relatórios", "Configurações"};
         for (String module : modules) {
             JButton button = createHoverButton(module);
 
             // Adiciona funcionalidade ao botão "Cadastro"
             if (module.equals("Cadastro")) {
                 button.addActionListener(e -> popMenuCadastro.show(button, 0, button.getHeight()));
-                menuUsuario.addActionListener(e -> {UserView userView = new UserView(); userView.setVisible(true);});
+                menuUsuario.addActionListener(e -> {
+                    if (adminValidation == false) {
+                        JOptionPane.showMessageDialog(null, "Sem permissão de acesso!!");
+                    }else{
+                        UserView userView = new UserView(); userView.setVisible(true);
+                    }
+                });
+                menuCliente.addActionListener(e -> {ClientView clientView = new ClientView(); clientView.setVisible(true);});
             }
 
             hotbar.add(button);
@@ -156,7 +164,7 @@ public class MainScreenView extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainScreenView mainScreen = new MainScreenView(true);
+        MainScreenView mainScreen = new MainScreenView(false);
         mainScreen.setVisible(true);
     }
 
