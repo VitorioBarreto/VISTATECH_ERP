@@ -15,6 +15,7 @@ public class MainScreenView extends JFrame {
 
     public MainScreenView(boolean adminValidation) {
         setTitle("Sistema ERP - Tela Inicial");
+        //initLookAndFeel();
         setIconImage(new ImageIcon("src/main/resources/logotipo.png").getImage());
 
         // Inicializa a janela como maximizada
@@ -166,6 +167,13 @@ public class MainScreenView extends JFrame {
     public static void main(String[] args) {
         MainScreenView mainScreen = new MainScreenView(false);
         mainScreen.setVisible(true);
+    }
+    private void initLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     // Verifica se a janela está maximizada

@@ -35,6 +35,7 @@ public class UserView extends JFrame {
     }
 
     private void Components() {
+        initLookAndFeel();
         JPanel painelCabecalho = new JPanel(new FlowLayout(FlowLayout.LEFT));
         painelCabecalho.setBackground(new Color(59, 89, 182));
         painelCabecalho.setPreferredSize(new Dimension(800, 70));
@@ -358,5 +359,12 @@ public class UserView extends JFrame {
     public static void main(String[] args) {
         UserView userScreen = new UserView();
         userScreen.setVisible(true);
+    }
+    private void initLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

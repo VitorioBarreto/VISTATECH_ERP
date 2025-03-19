@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 public class LoginScreen extends JFrame {
 
     public LoginScreen() {
+
         setTitle("V1.0.1");
         setSize(400, 350);
 
@@ -154,5 +155,12 @@ public class LoginScreen extends JFrame {
                 loginScreen.setVisible(true);
             }
         });
+    }
+    private void initLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
