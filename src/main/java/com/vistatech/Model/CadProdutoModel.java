@@ -33,6 +33,7 @@ public class CadProdutoModel {
         } catch (SQLException e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, "Erro ao carregar produtos do banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+            System.out.println(e);
         }
         return produtoEstoques;
     }

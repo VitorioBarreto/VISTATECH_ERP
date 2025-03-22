@@ -30,7 +30,6 @@ public class CadProdutoView extends JFrame {
 
         setTitle("Módulo de Estoque");
         setSize(800, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         setLayout(new BorderLayout(10, 10));

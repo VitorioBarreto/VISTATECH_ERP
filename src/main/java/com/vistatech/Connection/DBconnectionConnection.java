@@ -8,7 +8,7 @@ public class DBconnectionConnection {
     // Remover a variável 'driver' pois não é mais necessária
     private static final String URL = "jdbc:mysql://127.0.0.1:3306/my_application";
     private static final String USER = "root";
-    private static final String PASSWORD = "Gus35582175";
+    private static final String PASSWORD = "root";
 
     public static Connection getConnection() throws SQLException {
         try {

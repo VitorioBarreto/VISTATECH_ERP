@@ -36,7 +36,6 @@ public class EstoqueView extends JFrame {
         this.model = model;
         setTitle("Consulta de Estoque");
         setSize(800, 500);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         iconeCheckmark = carregarIcone("/icons/check.png");

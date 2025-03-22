@@ -1,4 +1,4 @@
-package com.vistatech.View;
+package com.vistatech.Main;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,7 +7,14 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowStateListener;
 
-import com.vistatech.Main.LoginScreenMain;
+import com.vistatech.Controller.EstoqueController;
+import com.vistatech.Model.CadProdutoModel;
+import com.vistatech.Model.EstoqueModel;
+import com.vistatech.View.ClientView;
+import com.vistatech.View.EstoqueView;
+import com.vistatech.View.UserView;
+import com.vistatech.Controller.CadProdutoController;
+import com.vistatech.View.CadProdutoView;
 
 public class MainScreenView extends JFrame {
 
@@ -90,7 +97,15 @@ public class MainScreenView extends JFrame {
                         UserView userView = new UserView(); userView.setVisible(true);
                     }
                 });
-                menuCliente.addActionListener(e -> {ClientView clientView = new ClientView(); clientView.setVisible(true);});
+                menuCliente.addActionListener(e -> {
+                    ClientView clientView = new ClientView(); clientView.setVisible(true);});
+
+                menuProduto.addActionListener(e -> {
+                    CadProdutoModel model = new CadProdutoModel();
+                    CadProdutoView view = new CadProdutoView(model);
+                    new CadProdutoController(model, view);
+                    view.setVisible(true);
+                });
             }
             if(module.equals("Sair")){
                 button.addActionListener(e -> {
@@ -104,6 +119,14 @@ public class MainScreenView extends JFrame {
                         new LoginScreenMain();
                         dispose();
                     }
+                });
+            }
+            if (module.equals("Estoque Produtos")) {
+                button.addActionListener(e -> {
+                    EstoqueModel model = new EstoqueModel();
+                    EstoqueView view = new EstoqueView(model);
+                    new EstoqueController(model, view);
+                    view.setVisible(true);
                 });
             }
 
@@ -179,7 +202,7 @@ public class MainScreenView extends JFrame {
     }
 
     public static void main(String[] args) {
-        MainScreenView mainScreen = new MainScreenView(false);
+        MainScreenView mainScreen = new MainScreenView(true);
         mainScreen.setVisible(true);
     }
     private void initLookAndFeel() {

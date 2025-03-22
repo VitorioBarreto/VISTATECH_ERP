@@ -7,7 +7,31 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c78edeb0-a5d8-433d-886d-8a5af9479b7b" name="Changes" comment="Commit final dos módulos de Cadastro de produto e Estoque - 21/03" />
+    <list default="true" id="c78edeb0-a5d8-433d-886d-8a5af9479b7b" name="Changes" comment="Commit final dos módulos de Cadastro de produto e Estoque - 21/03">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/Connection/DBconnectionConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/Connection/DBconnectionConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/Main/LoginScreenMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/Main/LoginScreenMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/Model/CadProdutoModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/Model/CadProdutoModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/View/CadProdutoView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/View/CadProdutoView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/View/EstoqueView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/View/EstoqueView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/vistatech/View/MainScreenView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/vistatech/Main/MainScreenView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Connection/DBconnection.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController$AdicionarListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController$AdicionarListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController$AtualizarListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController$AtualizarListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/CadProdutoController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/EstoqueController$PesquisarListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/EstoqueController$PesquisarListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/EstoqueController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Controller/EstoqueController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/GettersSetters/Produto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/GettersSetters/ProdutoEstoque.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/GettersSetters/ProdutoEstoque.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Model/CadProdutoModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Model/CadProdutoModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Model/EstoqueModel.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Model/EstoqueModel.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Service/RelatorioService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Service/RelatorioService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/Util/PopulaBancoDadosUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/Util/PopulaBancoDadosUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/View/CadProdutoView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/View/CadProdutoView$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/View/CadProdutoView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/View/CadProdutoView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/View/CaixaTesteView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/View/CaixaTesteView.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/vistatech/View/EstoqueView.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/vistatech/View/EstoqueView.class" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -78,27 +102,32 @@
     "Application.CadProdutoView$Main.executor": "Run",
     "Application.CadastroClienteView.executor": "Run",
     "Application.CadastroClientesView.executor": "Run",
+    "Application.ClientView.executor": "Run",
     "Application.EstoqueView$Main.executor": "Run",
     "Application.LoginScreenMain.executor": "Run",
     "Application.Main.executor": "Run",
+    "Application.MainScreenView.executor": "Run",
     "Application.PopulaBancoDados.executor": "Run",
     "Application.PopulaBancoDadosView.executor": "Run",
     "Application.RelatorioEstoqueMain.executor": "Run",
+    "Application.UserView.executor": "Run",
     "Application.com.vistatech.estoque.Main.executor": "Run",
     "Application.com.vistatech.relatorio.RelatorioEstoqueMain.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "com.codeium.enabled": "true",
     "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "estoque",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/BRKSPRADO/Documents/BKP",
+    "last_opened_file_path": "C:/VistaTechERP",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -117,7 +146,7 @@
       <module name="VTERP-Estoque" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="com.vistatech.View.*" />
+          <option name="PATTERN" value="com.vistatech.Main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -176,8 +205,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-a94e463ab2e7-intellij.indexing.shared.core-IU-243.26053.27" />
-        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-IU-243.26053.27" />
+        <option value="bundled-jdk-9823dce3aa75-125ca727e0f0-intellij.indexing.shared.core-IU-243.23654.189" />
+        <option value="bundled-js-predefined-d6986cc7102b-822845ee3bb5-JavaScript-IU-243.23654.189" />
       </set>
     </attachedChunks>
   </component>
@@ -199,6 +228,8 @@
       <updated>1741783794769</updated>
       <workItem from="1742602463013" duration="2241000" />
       <workItem from="1742610017733" duration="2332000" />
+      <workItem from="1742612556243" duration="38000" />
+      <workItem from="1742612600808" duration="2051000" />
     </task>
     <task id="LOCAL-00002" summary="Atualizações Módulo Estoque - 12/03">
       <option name="closed" value="true" />

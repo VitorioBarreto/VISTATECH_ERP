@@ -1,7 +1,6 @@
 package com.vistatech.Main;
 
 import com.vistatech.Connection.DataBaseConnection;
-import com.vistatech.View.MainScreenView;
 
 import javax.swing.*;
 import java.awt.*;
