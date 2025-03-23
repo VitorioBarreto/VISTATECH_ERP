@@ -73,3 +73,5 @@ Este projeto é de código aberto e está disponível sob a licença **MIT**.
 
 🔹 Projeto acadêmico desenvolvido para aprimorar a administração de óticas e expandir para novos negócios.
 
+
+
